@@ -1,0 +1,349 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family:Arial, Helvetica, sans-serif;
+}
+
+header {
+  background-color: #0E3569;
+  color:white;
+  text-align: center;
+  padding: 20px;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+}
+
+/*form*/
+
+.forms-container {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px;
+  gap: 20px;
+  max-width: 400px;
+}
+
+.forms-container > form {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  padding: 20px;
+  width: 100%;
+}
+
+form {
+  padding: 20px;
+  gap: 10px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;}
+
+label {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  gap: 5px;
+}
+
+label > input, label > textarea {
+  height: 30px;
+  width: 100%;
+  background-color: rgb(233, 233, 233);
+  border: 1px solid transparent;
+  border-left: 5px solid #0E3569;
+}
+
+label > input, label > textarea {
+  height: 30px;
+  width: 100%;
+  background-color: rgb(233, 233, 233);
+  border: 1px solid transparent;
+  border-left: 5px solid #0E3569;
+  border-radius: 5px;
+  padding-left: 10px;
+}
+
+label > input:focus, label > textarea:focus {
+  outline: none;
+  border: 1px solid #0E3569;
+  border-left: 5px solid #0E3569;
+}
+
+label > textarea {
+  height: 80px;
+  resize: none;
+}
+
+.checkbox {
+  display: grid;
+  grid-template-columns: 10% 90%;
+  align-items: center;
+}
+
+.checkbox > input {
+  height: auto;
+  cursor: pointer;
+}
+
+form > button, .info-container > button {
+  width: 25%;
+  height: 30px;
+  color: white;
+  border: 1px solid transparent;
+  background-color: #0E3569;
+  border-radius: 5px;
+  align-self: center;
+  cursor: pointer;
+}
+
+img {
+  width: 300px;
+  filter: drop-shadow(5px 0 0 white) 
+        drop-shadow(0 5px 0 white)
+        drop-shadow(-5px 0 0 white) 
+        drop-shadow(0 -5px 0 white);
+  align-self: center;
+
+}
+
+.cv-container {
+  max-width: 700px;
+  height: 842px;
+  height: min-content;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto auto;
+  grid-template-areas: 
+  "image name-and-position"
+  "personal-info experience"
+  "education experience";
+  border-bottom: 10px solid #0E3569;
+  margin: 20px;
+}
+
+
+/*containers*/
+
+.image-container {
+  grid-area: image;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  background-color: #F6F0EF;
+  position: relative;
+  padding: 30px;
+}
+
+#upload-img {
+  width: 40px;
+  filter: none;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.image-container > form {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  background-color: transparent;
+  border: 1px solid transparent;
+  box-shadow: none;
+}
+
+.image-container > form > label {
+  width: fit-content;
+  padding: 10px;
+  color: black;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.about-paragraph {
+  text-align: left;
+}
+
+.education-container,
+.experience-container,
+.name-and-position-container,
+.personal-information-container {
+  padding: 30px;
+}
+
+.personal-information-container {
+  background-color: #F6F0EF;
+  grid-area: personal-info;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  gap: 20px;
+  padding-bottom: 0px;
+}
+
+.personal-information-container > div {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.personal-information-container>div> h5,
+.education-container>h5,
+.experience-container>h5{
+  color: #0E3569;
+}
+
+.email {
+  border-bottom: 2px dotted #0E3569;
+  padding-bottom: 20px;
+}
+
+.education-container {
+  grid-area: education;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background-color: #F6F0EF;
+}
+
+.education-item, .experience-item {
+  display: flex;
+  justify-content: space-between;
+  height: 70px;
+  align-items: center;
+}
+
+.experience-item {
+  height: fit-content;
+}
+
+.info-container {
+  width: 100%;
+}
+
+.info-container > input {
+  width: 100%;
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-bottom: 1px solid #0E3569;
+  outline: none;
+}
+
+
+
+.info-container, .button-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: transparent;
+  border: 1px solid transparent;
+}
+
+.button-container > button > img {
+  width: 15px;
+  height: 15px;
+  border: 1px solid transparent;
+  background-color: transparent;
+  
+}
+
+.button-container > button {
+  width: 20px;
+  height: 20px;
+  border: 1px solid transparent;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.info-container > h6, 
+.experience-container > div > h6 {
+  font-size: 15px;
+}
+
+.info-container > p, 
+.experience-container > div > p {
+  font-size: 14px;
+}
+
+h5 {
+  font-size: x-large;
+}
+
+.name-and-position-container {
+  grid-area: name-and-position;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+
+
+}
+
+.name-surname {
+  font-size: 60px;
+}
+
+.name-surname:last-of-type{
+  padding-bottom: 20px;
+}
+
+h2 {
+
+  color: #0E3569;
+}
+
+h3 {
+  font-size: 20px;
+  border-bottom: 2px dotted #0E3569;
+  padding-bottom: 20px;
+}
+
+.experience-container{
+  grid-area: experience;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  justify-content: flex-start;
+  background-color: white;
+}
+
+.education-item {
+  height: 80px;
+  background-color: transparent;
+}
+
+ul {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+li {
+  font-size: small;
+  margin-left: 20px;
+}
+
+.print-button-container {
+  margin: 20px;
+  background-color: transparent;
+  border: 1px solid transparent;
+}
+
+.print-button-container > button {
+  cursor: pointer;
+  background-color: transparent;
+  border: 1px solid transparent;
+}
+
+.print-button-container > button > img {
+  width: 20px;
+  background-color: transparent;
+  border: 1px solid transparent;
+}
