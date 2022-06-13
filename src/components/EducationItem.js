@@ -1,85 +1,116 @@
-import React from "react";
+import React, { useState } from "react";
 import editIcon from "../pen-to-square-solid.svg";
-import deleteIcon from "../trash-can-solid.svg"
+import deleteIcon from "../trash-can-solid.svg";
 
+export default function EducationItem(props) {
+  const [educationItemDetails, setEducationItemDetails] = useState({
+    isShown: false,
+    editMode: false,
+    titleEdit: "",
+    institutionEdit: "",
+    dateEdit: "",
+  });
 
-export default class EducationItem extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isShown: false,
-      editMode: false,
-      titleEdit: "",
-      institutionEdit: "",
-      dateEdit: "",
-    };
+  function setIsShown(option) {
+    setEducationItemDetails((prevState) => {
+      return {
+        ...prevState,
+        isShown: option,
+      };
+    });
   }
 
-  setIsShown = (option) => {
-    this.setState({ isShown: option });
-  };
+  function setEditMode(option) {
+    setEducationItemDetails((prevState) => {
+      return {
+        ...prevState,
+        editMode: option,
+      };
+    });
+  }
 
-  setEditMode = (option) => {
-    this.setState({ editMode: option });
-  };
+  function setNewValues(e) {
+    setEducationItemDetails((prevState) => {
+      return {
+        ...prevState,
+        [e.target.name]: e.target.value,
+      };
+    });
+  }
 
-  setNewValues = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
-
-  render() {
-    return (
-      <div
-        className="education-item"
-        onMouseEnter={() => this.setIsShown(true)}
-        onMouseLeave={() => this.setIsShown(false)}
-        id={this.props.id}
-        key={this.props.key}
-      >
-        <div className="info-container">
-        {this.state.editMode === false && <h6>{this.props.institution}</h6>}
-
-        {this.state.editMode && (
-          <input name="titleEdit" placeholder="Add new title" onChange={this.setNewValues} />
+  return (
+    <div
+      className="education-item"
+      onMouseEnter={() => setIsShown(true)}
+      onMouseLeave={() => setIsShown(false)}
+      id={props.id}
+      key={props.key}
+    >
+      <div className="info-container">
+        {educationItemDetails.editMode === false && (
+          <h6>{props.institution}</h6>
         )}
 
-        {this.state.editMode === false && <p>{this.props.title}, {this.props.date.slice(0, 4)}</p>}
-
-        {this.state.editMode && (
-          <input name="institutionEdit" placeholder="Add new institution" onChange={this.setNewValues} />
+        {educationItemDetails.editMode && (
+          <input
+            name="titleEdit"
+            placeholder="Add new title"
+            onChange={setNewValues}
+          />
         )}
 
-        {this.state.editMode && (
-          <input name="dateEdit" type="date" onChange={this.setNewValues} />
+        {educationItemDetails.editMode === false && (
+          <p>
+            {props.title}, {props.date.slice(0, 4)}
+          </p>
         )}
 
-        {this.state.editMode === true && (
+        {educationItemDetails.editMode && (
+          <input
+            name="institutionEdit"
+            placeholder="Add new institution"
+            onChange={setNewValues}
+          />
+        )}
+
+        {educationItemDetails.editMode && (
+          <input name="dateEdit" type="date" onChange={setNewValues} />
+        )}
+
+        {educationItemDetails.editMode === true && (
           <button
             onClick={() => {
-              this.props.edit(
-                this.props.id,
-                this.state.titleEdit,
-                this.state.institutionEdit,
-                this.state.dateEdit
+              props.edit(
+                props.id,
+                educationItemDetails.titleEdit,
+                educationItemDetails.institutionEdit,
+                educationItemDetails.dateEdit
               );
-              this.setEditMode(false);
+              setEditMode(false);
             }}
           >
             Done
           </button>
         )}
-        
-        </div>
-        <div className="button-container">
-        {this.state.isShown && this.state.editMode === false && (
-          <button className="button-edit" onClick={() => this.setEditMode(true)}><img alt="icon-edit" src={editIcon}></img></button>
-        )}
-
-        {this.state.isShown && this.state.editMode === false && (
-          <button className="button-delete" onClick={() => this.props.delete(this.props.id)}><img alt="icon-delete" src={deleteIcon}></img></button>
-        )}
-        </div>
       </div>
-    );
-  }
+      <div className="button-container">
+        {educationItemDetails.isShown &&
+          educationItemDetails.editMode === false && (
+            <button className="button-edit" onClick={() => setEditMode(true)}>
+              <img alt="icon-edit" src={editIcon}></img>
+            </button>
+          )}
+
+        {educationItemDetails.isShown &&
+          educationItemDetails.editMode === false && (
+            <button
+              className="button-delete"
+              onClick={() => props.delete(props.id)}
+            >
+              <img alt="icon-delete" src={deleteIcon}></img>
+            </button>
+          )}
+      </div>
+    </div>
+  );
 }

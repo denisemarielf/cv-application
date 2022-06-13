@@ -1,10 +1,9 @@
-import React from "react"
+import React from "react";
 import ExperienceItem from "./ExperienceItem"
 
-export default class DisplayExperienceForm extends React.Component {
-    
-    render() {
-        const data = this.props.data.experience.map(item => {
+export default function DisplayExperienceForm (props) {
+
+        const data = props.data.experience.map(item => {
             return (
                 <ExperienceItem 
                 position={item.position}
@@ -17,8 +16,8 @@ export default class DisplayExperienceForm extends React.Component {
                 task3= {item.task3}
                 id={item.id}
                 key= {item.key}
-                edit={this.props.edit}
-                delete={this.props.delete}
+                edit={props.edit}
+                delete={props.delete}
                 />
             )
         })
@@ -28,5 +27,5 @@ export default class DisplayExperienceForm extends React.Component {
           {data}
       </>
     )
-  }
+  
   }

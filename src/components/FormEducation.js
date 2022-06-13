@@ -1,61 +1,71 @@
-import React from "react"
-import uniqid from "uniqid"
+import React, { useState } from "react";
+import uniqid from "uniqid";
 
-export default class Form extends React.Component {
+export default function Form(props) {
+  const [formEducationInfo, setFormEducationInfo] = useState({
+    title: "",
+    institution: "",
+    date: "",
+    id: uniqid(),
+    key: uniqid(),
+  });
 
-    constructor(props){
-        super(props)
-        this.state = {
-            title: "",
-            institution: "",
-            date: "",
-            id: uniqid(),
-            key: uniqid()
-        }
-    }
-
-    onChange = (e) => {
-        this.setState(
-            {[e.target.name]: e.target.value,
-            id: uniqid(),
-            key: uniqid()}
-        )
-    }
-
-    handleSubmit = (e) => {
-        e.preventDefault()
-        this.props.getEducationInfo(this.state)
-        this.setState({
-            title: "",
-            institution: "",
-            id: "",
-            key: ""
-        })
-    }
-
-    render(){
-      return (
-          <>
-        <form onSubmit={this.handleSubmit}>
-        <h2>Educational experience</h2>
-            <label>
-                Title:
-                <input type="text" name="title" value={this.state.title} onChange={this.onChange} />
-            </label>
-            
-            <label>
-                Institution:
-                <input type="text" name="institution" value={this.state.institution} onChange={this.onChange} />
-            </label>
-            <label>
-                Date:
-                <input type="date" name="date" value={this.state.date} onChange={this.onChange} />
-            </label>
-            <button>Add</button>
-        </form>
-
-        </>
-      )
-    }
+  function onChange(e) {
+    setFormEducationInfo((prevState) => {
+      return {
+        ...prevState,
+        [e.target.name]: e.target.value,
+        id: uniqid(),
+        key: uniqid(),
+      };
+    });
   }
-  
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    props.getEducationInfo(formEducationInfo);
+    setFormEducationInfo({
+      title: "",
+      institution: "",
+      id: "",
+      key: "",
+    });
+  }
+
+  return (
+    <>
+      <form onSubmit={handleSubmit}>
+        <h2>Educational experience</h2>
+        <label>
+          Title:
+          <input
+            type="text"
+            name="title"
+            value={formEducationInfo.title}
+            onChange={onChange}
+          />
+        </label>
+
+        <label>
+          Institution:
+          <input
+            type="text"
+            name="institution"
+            value={formEducationInfo.institution}
+            onChange={onChange}
+          />
+        </label>
+        <label>
+          Date:
+          <input
+            type="date"
+            name="date"
+            value={formEducationInfo.date}
+            onChange={onChange}
+          />
+        </label>
+        <button>Add</button>
+      </form>
+    </>
+  );
+}

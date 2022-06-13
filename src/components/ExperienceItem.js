@@ -1,132 +1,188 @@
-import React from "react";
+import React, { useState } from "react";
 import editIcon from "../pen-to-square-solid.svg";
-import deleteIcon from "../trash-can-solid.svg"
+import deleteIcon from "../trash-can-solid.svg";
 
-export default class ExperienceItem extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isShown: false,
-      editMode: false,
-      positionEdit: "",
-      companyEdit: "",
-      dateStartEdit: "",
-      dateFinishEdit: "",
-      isCurrentEdit: false,
-      task1Edit: "",
-      task2Edit: "",
-      task3Edit: "",
-    };
+export default function ExperienceItem(props) {
+  const [experienceItemDetails, setExperienceItemDetails] = useState({
+    isShown: false,
+    editMode: false,
+    positionEdit: "",
+    companyEdit: "",
+    dateStartEdit: "",
+    dateFinishEdit: "",
+    isCurrentEdit: false,
+    task1Edit: "",
+    task2Edit: "",
+    task3Edit: "",
+  });
+
+  function setIsShown(option) {
+    setExperienceItemDetails((prevState) => {
+      return {
+        ...prevState,
+        isShown: option,
+      };
+    });
   }
 
-  setIsShown = (option) => {
-    this.setState({ isShown: option });
-  };
+  function setEditMode(option) {
+    setExperienceItemDetails((prevState) => {
+      return {
+        ...prevState,
+        editMode: option,
+      };
+    });
+  }
 
-  setEditMode = (option) => {
-    this.setState({ editMode: option });
-  };
-
-  setNewValues = (e) => {
+  function setNewValues(e) {
     if (e.target.name !== "isCurrentEdit") {
-        this.setState(
-        {[e.target.name]: e.target.value}
-        )
+      setExperienceItemDetails((prevState) => {
+        return {
+          ...prevState,
+          [e.target.name]: e.target.value,
+        };
+      });
     } else {
-        this.setState(
-           {isCurrentEdit: e.target.checked}
-        )
+      setExperienceItemDetails((prevState) => {
+        return {
+          ...prevState,
+          isCurrentEdit: e.target.checked,
+        };
+      });
     }
-  };
+  }
 
+  return (
+    <div
+      className="experience-item"
+      onMouseEnter={() => setIsShown(true)}
+      onMouseLeave={() => setIsShown(false)}
+      id={props.id}
+      key={props.key}
+    >
+      <div className="info-container">
+        {experienceItemDetails.editMode === false && <h6>{props.position}</h6>}
 
-  render() {
-    return (
-      <div 
-        className="experience-item"
-        onMouseEnter={() => this.setIsShown(true)}
-        onMouseLeave={() => this.setIsShown(false)}
-        id={this.props.id}
-        key={this.props.key}
-      >
-        <div className="info-container">
-        {this.state.editMode === false && <h6>{this.props.position}</h6>}
-
-        {this.state.editMode && (
-          <input name="positionEdit" placeholder="Add new position" onChange={this.setNewValues} />
+        {experienceItemDetails.editMode && (
+          <input
+            name="positionEdit"
+            placeholder="Add new position"
+            onChange={setNewValues}
+          />
         )}
 
-        {this.state.editMode === false && <p>{this.props.company}, {this.props.dateStart.slice(0, 4)} - {this.props.isCurrent ? "present" : this.props.dateFinish.slice(0, 4)}</p>}
-
-        {this.state.editMode && (
-        <input name="companyEdit" placeholder="Add new company" onChange={this.setNewValues} />
+        {experienceItemDetails.editMode === false && (
+          <p>
+            {props.company}, {props.dateStart.slice(0, 4)} -{" "}
+            {props.isCurrent ? "present" : props.dateFinish.slice(0, 4)}
+          </p>
         )}
 
-        {this.state.editMode && (
-          <input name="dateStartEdit" placeholder="Add new start date" type="date" onChange={this.setNewValues} />
+        {experienceItemDetails.editMode && (
+          <input
+            name="companyEdit"
+            placeholder="Add new company"
+            onChange={setNewValues}
+          />
         )}
 
-        {this.state.editMode && !this.state.isCurrentEdit && (
-        <input name="dateFinishEdit" placeholder="Add new finish date" type="date" onChange={this.setNewValues} />
+        {experienceItemDetails.editMode && (
+          <input
+            name="dateStartEdit"
+            placeholder="Add new start date"
+            type="date"
+            onChange={setNewValues}
+          />
         )}
 
-        {this.state.editMode && (
+        {experienceItemDetails.editMode &&
+          !experienceItemDetails.isCurrentEdit && (
+            <input
+              name="dateFinishEdit"
+              placeholder="Add new finish date"
+              type="date"
+              onChange={setNewValues}
+            />
+          )}
+
+        {experienceItemDetails.editMode && (
           <label className="checkbox">
-          <input name="isCurrentEdit" type="checkbox" onChange={this.setNewValues} />
-          Are you currently working here?
-        </label>
+            <input
+              name="isCurrentEdit"
+              type="checkbox"
+              onChange={setNewValues}
+            />
+            Are you currently working here?
+          </label>
         )}
 
-        
-
-        {this.state.editMode === false && 
+        {experienceItemDetails.editMode === false && (
           <ul>
-              <li>{this.props.task1}</li>
-              <li>{this.props.task2}</li>
-              <li>{this.props.task3}</li>
-          </ul>}
-        
-        {this.state.editMode && (
-          <>
-            <input placeholder="Task 1" name="task1Edit" onChange={this.setNewValues} />
-            <input placeholder="Task 2" name="task2Edit" onChange={this.setNewValues} />
-            <input placeholder="Task 3" name="task3Edit" onChange={this.setNewValues} />
-          </>
-        
+            <li>{props.task1}</li>
+            <li>{props.task2}</li>
+            <li>{props.task3}</li>
+          </ul>
         )}
 
-        {this.state.editMode === true && (
+        {experienceItemDetails.editMode && (
+          <>
+            <input
+              placeholder="Task 1"
+              name="task1Edit"
+              onChange={setNewValues}
+            />
+            <input
+              placeholder="Task 2"
+              name="task2Edit"
+              onChange={setNewValues}
+            />
+            <input
+              placeholder="Task 3"
+              name="task3Edit"
+              onChange={setNewValues}
+            />
+          </>
+        )}
+
+        {experienceItemDetails.editMode === true && (
           <button
             onClick={() => {
-              this.props.edit(
-                this.props.id,
-                this.state.positionEdit,
-                this.state.companyEdit,
-                this.state.dateStartEdit,
-                this.state.dateFinishEdit,
-                this.state.isCurrentEdit,
-                this.state.task1Edit,
-                this.state.task2Edit,
-                this.state.task3Edit,
+              props.edit(
+                props.id,
+                experienceItemDetails.positionEdit,
+                experienceItemDetails.companyEdit,
+                experienceItemDetails.dateStartEdit,
+                experienceItemDetails.dateFinishEdit,
+                experienceItemDetails.isCurrentEdit,
+                experienceItemDetails.task1Edit,
+                experienceItemDetails.task2Edit,
+                experienceItemDetails.task3Edit
               );
-              this.setEditMode(false);
+              setEditMode(false);
             }}
           >
             Done
           </button>
-        
         )}
-        </div>
-        <div className="button-container">
-        {this.state.isShown && this.state.editMode === false && (
-          <button className="button-edit" onClick={() => this.setEditMode(true)}><img alt="icon-edit" src={editIcon}></img></button>
-        )}
-
-        {this.state.isShown && this.state.editMode === false && (
-          <button className="button-delete" onClick={() => this.props.delete(this.props.id)}><img alt="icon-delete" src={deleteIcon}></img></button>
-        )}
-        </div>
       </div>
-    );
-  }
+      <div className="button-container">
+        {experienceItemDetails.isShown &&
+          experienceItemDetails.editMode === false && (
+            <button className="button-edit" onClick={() => setEditMode(true)}>
+              <img alt="icon-edit" src={editIcon}></img>
+            </button>
+          )}
+
+        {experienceItemDetails.isShown &&
+          experienceItemDetails.editMode === false && (
+            <button
+              className="button-delete"
+              onClick={() => props.delete(props.id)}
+            >
+              <img alt="icon-delete" src={deleteIcon}></img>
+            </button>
+          )}
+      </div>
+    </div>
+  );
 }
